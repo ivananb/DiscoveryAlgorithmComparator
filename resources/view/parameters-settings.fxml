@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<DialogPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="main.controller.ParametersSettingsController"
+             stylesheets="@/css/parameters-settings.css">
+    <content>
+        <VBox fx:id="settingsContainer" />
+    </content>
+    
+    <buttonTypes>
+        <ButtonType fx:id="saveButton" buttonData="APPLY" text="Save"/>
+        <ButtonType fx:id="resetButton" buttonData="OTHER" text="Reset to Defaults"/>
+        <ButtonType buttonData="CANCEL_CLOSE" text="Cancel"/>
+    </buttonTypes>
+</DialogPane>

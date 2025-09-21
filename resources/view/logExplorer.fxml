@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox stylesheets="@/css/log-explorer.css" xmlns="http://javafx.com/javafx/17"
+		xmlns:fx="http://javafx.com/fxml/1"
+		fx:controller="main.controller.LogExplorerController">
+   <children>
+       <SplitPane dividerPositions="0.3" prefHeight="600.0" prefWidth="800.0">
+           <items>
+               <VBox>
+                  <children>
+                      <Label style="-fx-font-weight: bold; -fx-padding: 5;" text="Traces" />
+                      <ListView fx:id="traceListView" prefHeight="549.0" prefWidth="233.0" />
+                  </children>
+               </VBox>
+               <VBox>
+                  <children>
+                      <Label style="-fx-font-weight: bold; -fx-padding: 5;" text="Trace Details" />
+                      <TextArea fx:id="traceDetailsTextArea" editable="false" prefHeight="549.0" prefWidth="553.0" />
+                  </children>
+               </VBox>
+           </items>
+       </SplitPane>
+       <HBox alignment="CENTER_RIGHT" style="-fx-padding: 5;">
+           <children>
+               <Button fx:id="exportTxtButton" text="Export as TXT" onAction="#handleExportTxt" />
+           </children>
+       </HBox>
+   </children>
+</VBox>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+          fx:controller="main.controller.settings.HeuristicMinerSettingsController"
+          stylesheets="@/css/parameters-settings.css">
+	
+	<!-- Basic Thresholds -->
+    <Label text="Dependency Threshold:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+    <Slider fx:id="dependencyThresholdSlider" min="0.5" max="1.0" value="0.9" 
+           blockIncrement="0.05" majorTickUnit="0.1" minorTickCount="1" showTickMarks="true" 
+           snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+    <Label fx:id="dependencyThresholdValue" text="0.9" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+    
+    <Label text="AND Threshold:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <Slider fx:id="andThresholdSlider" min="0.1" max="1.0" value="0.65" 
+           blockIncrement="0.05" majorTickUnit="0.1" minorTickCount="1" showTickMarks="true" 
+           snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <Label fx:id="andThresholdValue" text="0.65" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+    
+    <Label text="L2L Threshold:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <Slider fx:id="l2lThresholdSlider" min="0.0" max="1.0" blockIncrement="0.05" 
+           majorTickUnit="0.1" minorTickCount="1" showTickMarks="true" snapToTicks="true" 
+           GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <Label fx:id="l2lThresholdValue" text="0.85" styleClass="value-display" 
+           GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+    
+    <!-- Advanced Settings -->
+    <Label text="Relative-to-Best Threshold:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <Slider fx:id="relativeThresholdSlider" min="0.0" max="1.0" blockIncrement="0.05" 
+           majorTickUnit="0.1" minorTickCount="1" showTickMarks="true" snapToTicks="true" 
+           GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <Label fx:id="relativeThresholdValue" text="0.20" styleClass="value-display" 
+           GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+    
+    <!-- Checkbox Options -->
+    <CheckBox fx:id="useAllConnectedCheck" text="Use All Connected Heuristics" 
+             GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="3"/>
+    
+    <CheckBox fx:id="useLongDistanceCheck" text="Use Long Distance Dependencies" 
+             GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="3"/>
+    
+</GridPane>

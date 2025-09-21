@@ -1,0 +1,139 @@
+/* ==================== */
+/*    BASE STYLES    */
+/* ==================== */
+.dialog-pane {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15px;
+    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
+}
+
+.dialog-pane .button-bar .container {
+    -fx-background-color: #ffffff;
+}
+
+.dialog-pane .content {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15px;
+}
+
+/* ==================== */
+/* GRID PANE STYLING   */
+/* ==================== */
+.grid-pane {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 6px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+    -fx-padding: 15px;
+}
+
+/* ==================== */
+/* LABEL STYLING  */
+/* ==================== */
+.label {
+    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #374151;
+}
+
+.label.value-display {
+    -fx-font-weight: bold;
+    -fx-text-fill: #3b82f6;
+    -fx-min-width: 40px;
+    -fx-alignment: center;
+}
+
+/* ==================== */
+/* SLIDER STYLING   */
+/* ==================== */
+.slider {
+    -fx-padding: 5 0 5 0;
+}
+
+.slider .track {
+    -fx-background-color: #e5e7eb;
+    -fx-background-radius: 2;
+    -fx-pref-height: 4;
+}
+
+.slider .thumb {
+    -fx-background-color: #3b82f6;
+    -fx-background-radius: 10;
+    -fx-pref-height: 15;
+    -fx-pref-width: 15;
+}
+
+.slider .axis .axis-label {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 11px;
+}
+
+/* ==================== */
+/* CHECKBOX STYLING */
+/* ==================== */
+.check-box {
+    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
+    -fx-text-fill: #374151;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+}
+
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 3px;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #3b82f6;
+}
+
+.check-box:selected .box {
+    -fx-background-color: white;
+    -fx-border-color: #3b82f6;
+}
+
+/* ==================== */
+/* BUTTON STYLING   */
+/* ==================== */
+.button {
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-padding: 6px 12px;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-background-color: #3b82f6;
+    -fx-border-color: #2563eb;
+    -fx-border-width: 1px;
+    -fx-min-height: 32px;
+}
+
+.button:hover {
+    -fx-background-color: #2563eb;
+}
+
+.button:pressed {
+    -fx-background-color: #1d4ed8;
+}
+
+.button:cancel {
+    -fx-background-color: #f9fafb;
+    -fx-text-fill: #374151;
+    -fx-border-color: #d1d5db;
+}
+
+.button:cancel:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.button:reset {
+    -fx-background-color: #fef2f2;
+    -fx-text-fill: #dc2626;
+    -fx-border-color: #fecaca;
+}
+
+.button:reset:hover {
+    -fx-background-color: #fecaca;
+}

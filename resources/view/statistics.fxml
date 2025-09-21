@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="main.controller.StatisticsController" 
+      styleClass="statistics-vbox" 
+      stylesheets="@/css/statistics.css" 
+      prefWidth="1000" prefHeight="500">
+    <padding>
+        <Insets bottom="12" left="12" right="12" top="12"/>
+    </padding>
+    
+    <!-- Header -->
+    <Label text="Algorithm Performance Comparison" styleClass="statistics-title"/>
+    
+    <!-- File info -->
+    <HBox styleClass="statistics-hbox" alignment="CENTER_LEFT">
+        <VBox styleClass="statistics-vbox-info">
+            <Label fx:id="fileNameLabel" text="File: None" styleClass="statistics-file-info"/>
+            <Label fx:id="fileStatsLabel" text="No model loaded" styleClass="statistics-file-info"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="bestAlgorithmLabel" text="Best: Not determined" styleClass="statistics-best-algorithm"/>
+    </HBox>
+    
+    <!-- Controls -->
+    <HBox fx:id="buttonBox" styleClass="statistics-hbox" alignment="CENTER_LEFT">
+        <CheckBox fx:id="removeSilentCheckbox" text="Remove Silent Transitions" styleClass="statistics-checkbox"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Advanced Weights" onAction="#handleToggleWeights" styleClass="statistics-small-button"/>
+        <ProgressIndicator fx:id="progressIndicator" visible="false" styleClass="statistics-progress"/>
+        <Button text="Run Comparison" onAction="#handleRunComparison" styleClass="statistics-button"/>
+    </HBox>
+    
+    <!-- Weight Controls (Initially hidden) -->
+    <VBox fx:id="weightsContainer" visible="false" managed="false" style="-fx-background-color: #f8f9fa; -fx-background-radius: 5; -fx-padding: 10; -fx-spacing: 10;">
+        <Label text="Customize how each parameter influences the overall algorithm score. Weights must sum to 1.0." 
+               styleClass="statistics-explanation" />
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label text="Customize Scoring Weights (optional):" styleClass="statistics-label" style="-fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Reset Defaults" onAction="#handleResetWeights" styleClass="statistics-small-button"/>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label text="Fitness:" styleClass="statistics-label"/>
+            <TextField fx:id="fitnessWeightField" text="0.4" prefWidth="50" styleClass="statistics-textfield"/>
+            <Label text="Precision:" styleClass="statistics-label"/>
+            <TextField fx:id="precisionWeightField" text="0.4" prefWidth="50" styleClass="statistics-textfield"/>
+            <Label text="Time:" styleClass="statistics-label"/>
+            <TextField fx:id="timeWeightField" text="0.1" prefWidth="50" styleClass="statistics-textfield"/>
+            <Label text="F-Measure:" styleClass="statistics-label"/>
+            <TextField fx:id="fMeasureWeightField" text="0.1" prefWidth="50" styleClass="statistics-textfield"/>
+        </HBox>
+    </VBox>
+    
+    <TableView fx:id="resultsTableView" styleClass="statistics-table" VBox.vgrow="ALWAYS" fixedCellSize="35">
+        <columns>
+            <TableColumn fx:id="algorithmColumn" text="Algorithm" minWidth="120" maxWidth="150"/>
+            <TableColumn fx:id="timeColumn" text="Time (ms)" minWidth="70" maxWidth="90"/>
+            <TableColumn fx:id="placesColumn" text="Places" minWidth="60" maxWidth="80"/>
+            <TableColumn fx:id="transitionsColumn" text="Transitions" minWidth="80" maxWidth="100"/>
+            <TableColumn fx:id="arcsColumn" text="Arcs" minWidth="60" maxWidth="80"/>
+            <TableColumn fx:id="fitnessColumn" text="Fitness %" minWidth="70" maxWidth="90"/>
+            <TableColumn fx:id="precisionColumn" text="Precision %" minWidth="80" maxWidth="100"/>
+            <TableColumn fx:id="fMeasureColumn" text="F-Measure %" minWidth="80" maxWidth="100"/>
+            <TableColumn fx:id="overallScoreColumn" text="Overall Score" minWidth="90" maxWidth="110"/>
+            <TableColumn fx:id="winnerColumn" text="Result" minWidth="60" maxWidth="80"/>
+        </columns>
+    </TableView>
+</VBox>

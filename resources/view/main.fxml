@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.Region?>
+
+<VBox stylesheets="@/css/main.css"
+		xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+		fx:controller="main.controller.MiningController">
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+   <children>
+       <!-- Title and status -->
+       <HBox alignment="CENTER_LEFT" spacing="20">
+          <children>
+              <Label fx:id="mainTitleLabel" text="Discovery Algorithm Comparator" />
+              <Label fx:id="applicationStatusLabel" text="Ready" />
+              <ProgressIndicator fx:id="progressIndicator" visible="false" styleClass="mining-progress"/>
+          </children>
+       </HBox>
+       
+       <!-- File Import Section -->
+       <HBox alignment="CENTER_LEFT" spacing="10" styleClass="button-section">
+          <children>
+              <Button fx:id="importFileButton" onAction="#handleImportFile" text="Import File" />
+              <Label text="File Type:" />
+              <Label fx:id="fileTypeLabel" text="None" style="-fx-font-weight: bold;" />
+          </children>
+       </HBox>
+       
+       <!-- PNML Workflow Controls (visible when PNML loaded) -->
+       <HBox fx:id="pnmlWorkflowBox" alignment="CENTER_LEFT" spacing="10" styleClass="button-section" visible="false">
+          <children>
+              <Label text="Traces:" />
+              <TextField fx:id="traceCountField" promptText="100" />
+              <Label text="Max Length:" />
+              <TextField fx:id="maxTraceLengthField" promptText="50" />
+              <Button fx:id="generateLogButton" onAction="#handleGenerateLog" text="Generate Event Log" />
+              <Button fx:id="exportLogXesButton" disable="true" onAction="#handleExportLogXes" text="Export as XES" />
+          	  <Button fx:id="logExplorerButton" disable="true" onAction="#handleShowTraceBrowser" text="Show Log Explorer" />
+          	  <Region HBox.hgrow="ALWAYS" />
+          	  <Button fx:id="showStatisticsButton" onAction="#handleShowStatistics" text="Show Statistics" disable="true" styleClass="statistics-button"/>
+          	  </children>
+       </HBox>
+       
+       <!-- Mining Section (visible when log is available) -->
+       <HBox fx:id="miningSectionBox" alignment="CENTER_LEFT" spacing="10" styleClass="button-section" visible="false">
+          <children>
+              <Label text="Algorithm:" />
+              <ComboBox fx:id="miningAlgorithmComboBox" prefWidth="200" />
+              <Button fx:id="settingsButton" onAction="#handleSettingsButton" text="Settings" />
+              <Button fx:id="mineModelButton" onAction="#handleMineModel" text="Mine New Model" disable="true" />
+              <CheckBox fx:id="removeSilentTransitionsCheckbox" text="Simplify Model" 
+                        onAction="#handleRemoveSilentTransitions" styleClass="silent-transitions-checkbox" />
+              <Button fx:id="exportPnmlButton" disable="true" onAction="#handleExportPnml" text="Export PNML" />
+              <Region HBox.hgrow="ALWAYS" />
+              <Button fx:id="clearResultsButton" onAction="#handleClearResults" text="Clear Results" />
+          </children>
+       </HBox>
+       
+       <!-- Model Visualization Section -->
+		<HBox prefWidth="1224.0" spacing="20" VBox.vgrow="ALWAYS">
+		   <children>
+		       <VBox styleClass="results-container" spacing="5">
+		          <Label style="-fx-font-weight: bold;" text="Mining Results" />
+		          <TextArea fx:id="miningResultsTextArea" editable="false" VBox.vgrow="ALWAYS" />
+		       </VBox>
+		       
+		       <VBox fx:id="visualizationContainer" spacing="10" HBox.hgrow="ALWAYS">
+		          <children>
+		              <VBox fx:id="originalModelContainer" spacing="5">
+		                 <Label fx:id="originalModelLabel" style="-fx-font-weight: bold;" text="Original Model" />
+		                 <WebView fx:id="originalModelWebView" prefHeight="300" VBox.vgrow="ALWAYS" />
+		              </VBox>
+		              <VBox fx:id="discoveredModelContainer" spacing="10">
+		                 <Label fx:id="discoveredModelLabel" style="-fx-font-weight: bold;" text="Discovered Model" />
+		                 <WebView fx:id="discoveredModelWebView" prefHeight="300" VBox.vgrow="ALWAYS" />
+		              </VBox>
+		          </children>
+		       </VBox>
+		   </children>
+		</HBox>
+   </children>
+</VBox>

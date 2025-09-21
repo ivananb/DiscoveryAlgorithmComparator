@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Load required JavaScript libraries -->
+    <script src='viz.js'></script>							<!-- Viz.js for Graphviz rendering -->
+    <script src='full.render.js'></script>					<!-- Additional rendering support -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>	<!-- D3.js for SVG manipulation -->
+    <style type="text/css">
+    	/* Basic styling to make the visualization fill the page */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;	/* Prevent scrollbars */
+            user-select: none;	/* Prevent text selection */
+        }
+        
+        #rootDiv {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            cursor: move;		/* Indicates the area is draggable */
+        }
+        
+        #svgContainer {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Style for node text in the graph */
+        .node text {
+            font-family: Helvetica;
+            font-size: 12px;
+            pointer-events: none;	/* Prevent text from intercepting mouse events */
+        }
+    </style>
+</head>
+<body>
+    <!-- Container for the graph visualisation -->
+    <div id="rootDiv">
+        <div id="svgContainer"></div> <!-- Where the SVG will be rendered -->
+    </div>
+    
+    <script>
+    
+        // Global variables for zoom/pan functionality
+        let svg, zoomGroup;					// References to SVG elements
+        let transform = {x: 0, y: 0, k: 1};	// Current transform (position and scale)
+        let isDragging = false;				// Flag for drag state
+        let lastX, lastY;					// Last mouse position for dragging
+        
+        // Initialise the visualisation container
+        function initContainer() {
+            // Create SVG element using D3.js
+            svg = d3.select("#svgContainer")
+                .append("svg")
+                .attr("width", "100%")
+                .attr("height", "100%");
+                
+            // Create a group for zoom/pan transformations
+            zoomGroup = svg.append("g");
+            
+            // Set up event listeners
+            setupEventListeners();
+        }
+        
+        // Set up mouse event listeners
+        function setupEventListeners() {
+            // Middle mouse button or Ctrl+Left click for panning
+            svg.on("mousedown", function(event) {
+                if (event.button === 1 || (event.button === 0 && event.ctrlKey)) {
+                    isDragging = true;
+                    lastX = event.clientX;
+                    lastY = event.clientY;
+                    document.body.style.cursor = "grabbing";
+                    event.preventDefault();
+                }
+            });
+            
+         	// Stop dragging when mouse is released anywhere in the document
+            document.addEventListener("mouseup", function() {
+                isDragging = false;
+                document.body.style.cursor = "default";
+            });
+            
+         	// Handle mouse movement for dragging
+            document.addEventListener("mousemove", function(event) {
+                if (isDragging) {
+                    const dx = event.clientX - lastX;
+                    const dy = event.clientY - lastY;
+                    lastX = event.clientX;
+                    lastY = event.clientY;
+                    
+                 	// Update transform with the drag distance
+                    transform.x += dx;
+                    transform.y += dy;
+                    applyTransform();
+                }
+            });
+            
+            // Mouse wheel for zooming
+            svg.on("wheel", function(event) {
+                event.preventDefault();
+                
+                // Get mouse position relative to SVG
+                const pt = svg.node().createSVGPoint();
+                pt.x = event.clientX;
+                pt.y = event.clientY;
+                const cursor = pt.matrixTransform(svg.node().getScreenCTM().inverse());
+                
+                // Calculate zoom factor
+                const scaleFactor = event.deltaY < 0 ? 1.1 : 0.9;
+                const newScale = transform.k * scaleFactor;
+                
+                // Limit zoom levels
+                if (newScale < 0.1 || newScale > 10) return;
+                
+                // Calculate new transform
+                transform.k = newScale;
+                transform.x = cursor.x - (cursor.x - transform.x) * scaleFactor;
+                transform.y = cursor.y - (cursor.y - transform.y) * scaleFactor;
+                
+                applyTransform();
+            });
+            
+            // Prevent context menu on right-click
+            svg.on("contextmenu", function(event) {
+                event.preventDefault();
+            });
+        }
+        
+        // Function to handle programmatic pan
+        function panVisualization(dx, dy) {
+            transform.x += dx;
+            transform.y += dy;
+            applyTransform();
+        }
+        
+        // Apply the current transform to the zoom group
+        function applyTransform() {
+            zoomGroup.attr("transform", 
+                `translate(${transform.x},${transform.y}) scale(${transform.k})`);
+        }
+        
+        // Center the view on the content
+        function centerView() {
+            const bbox = zoomGroup.node().getBBox();
+            const container = document.getElementById("rootDiv");
+            
+            if (bbox.width === 0 || bbox.height === 0) return;
+            
+            const scale = Math.min(
+                0.9 * container.clientWidth / bbox.width,
+                0.9 * container.clientHeight / bbox.height
+            );
+            
+            transform = {
+                x: container.clientWidth / 2 - (bbox.x + bbox.width / 2) * scale,
+                y: container.clientHeight / 2 - (bbox.y + bbox.height / 2) * scale,
+                k: scale
+            };
+            
+            applyTransform();
+        }
+        
+        // Function to display dot graph visualisation
+        function setModel(model) {
+            try {
+            	// Initialize container if not already done
+                if (!zoomGroup) {
+                    initContainer();
+                }
+                
+                // Clear previous content
+                zoomGroup.selectAll("*").remove();
+                
+                // Use Viz.js to render the graph (Graphviz format)
+                var viz = new Viz();
+                viz.renderSVGElement(model)
+                    .then(function(element) {
+                        // Append the rendered SVG to the zoom group
+                        zoomGroup.node().appendChild(element);
+                        
+                        // Center the view
+                        centerView();
+                        
+                        // Add click handlers if available
+                        if (typeof app !== 'undefined') {
+                            app.addGraphClickHandlers(element);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error rendering graph:", error);
+                        zoomGroup.html("<text x='20' y='20'>Error: " + error.message + "</text>");
+                    });
+            } catch (e) {
+                console.error("Error in setModel:", e);
+                if (zoomGroup) {
+                    zoomGroup.html("<text x='20' y='20'>Error: " + e.message + "</text>");
+                }
+            }
+        }
+        
+        function clearModel() {
+            if (zoomGroup) {
+                zoomGroup.selectAll("*").remove();
+            }
+        }
+        
+        // Initialize the container when page loads
+        window.onload = initContainer;
+        
+        // VERISION WITHOUT SVG OF setModel FUNCTION
+        
+        /*<div id="rootDiv"></div>
+        
+        <script>
+      		//Function to display dot graph visualization (Declare and automaton views)
+            function setModel(model) {
+                try {
+                    var container = document.getElementById("rootDiv");
+                    if (!container) {
+                        console.error("Graph container not found");
+                        return;
+                    }
+                    
+                    var viz = new Viz();
+                    viz.renderSVGElement(model)
+                        .then(function(element) {
+                            container.innerHTML = ''; //clear the page
+                            container.appendChild(element); //show the new model graph
+                            
+                          	//test to see if the graph could be clickable
+        					if (typeof app !== 'undefined') {
+        						app.addGraphClickHandlers(document);
+        					}
+                        })
+                        .catch(error => {
+                            console.error("Error rendering graph:", error);
+                            container.innerHTML = "Error: " + error.message;
+                        });
+                } catch (e) {
+                    console.error("Error in setModel:", e);
+                }
+            }
+            
+            function clearModel() {
+                var container = document.getElementById("rootDiv");
+                if (container) {
+                	//clears the page
+                    container.innerHTML = '';
+                }
+            }
+            */
+            
+        
+      	//setModel('digraph "" {id = "graphRoot"ranksep = ".6"nodesep = ".5"node [style="filled", shape=box, fontsize="8", fontname="Helvetica"]edge [fontsize="8", fontname="Helvetica" arrowsize=".8"]node2 [label="Resit\\n"fillcolor="#0000ff;1.0:#000000" gradientangle=90 fontcolor="#ffffff" tooltip="Resit"]node3 [label="Test_Failed\\n"fillcolor="#0000ff;1.0:#000000" gradientangle=90 fontcolor="#ffffff" tooltip="Test_Failed"]node0 [shape=none, margin=0, label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="4"><tr><td width="60" bgcolor="#d44942">Init[][]</td></tr><tr><td  width="60" bgcolor="#ffd700">Existence[][]</td></tr><tr><td bgcolor="blue"><font color="white">Driving_Test</font></td></tr></table>>]node1 [label="Getting_License\\n"fillcolor="#0000ff" fontcolor="#ffffff" tooltip="Getting_License"]node0 -> node1 [dir="both", edgetooltip="Response", labeltooltip="Response", arrowhead="normal", arrowtail="dot", label="Response\n[A.Grade>4][][]",]node0 -> node2 [dir="both", edgetooltip="Response", labeltooltip="Response", arrowhead="normal", arrowtail="dot", label="Response\n[A.Grade<=4][][]",]node0 -> node3 [dir="both", edgetooltip="Response", labeltooltip="Response", arrowhead="normal", arrowtail="dot", label="Response\n[A.Grade<=4][][]",]}');
+		//rootDiv.innerHTML = ''
+    </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+          fx:controller="main.controller.settings.EvolutionaryTreeMinerSettingsController"
+          stylesheets="@/css/parameters-settings.css" hgap="10" vgap="10">
+    
+    <!-- Population Size -->
+    <Label text="Population Size:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+    <Slider fx:id="populationSizeSlider" min="10" max="200" showTickMarks="true" snapToTicks="true"
+            GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+    <Label fx:id="populationSizeValue" text="20" styleClass="value-display"
+            GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+    
+    <!-- Elite Size -->
+    <Label text="Elite Size:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <Slider fx:id="eliteSizeSlider" min="0" max="50" showTickMarks="true" snapToTicks="true"
+            GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <Label fx:id="eliteSizeValue" text="5" styleClass="value-display"
+            GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+    
+    <!-- Random Trees -->
+    <Label text="Random Trees:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <Slider fx:id="randomTreesSlider" min="0" max="50" showTickMarks="true" snapToTicks="true"
+            GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <Label fx:id="randomTreesValue" text="0" styleClass="value-display"
+            GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+    
+    <!-- Crossover Chance -->
+    <Label text="Crossover Chance:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <Slider fx:id="crossoverChanceSlider" min="0" max="1" showTickMarks="true" snapToTicks="true"
+            majorTickUnit="0.25" minorTickCount="0" blockIncrement="0.05"
+            GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <Label fx:id="crossoverChanceValue" text="0.25" styleClass="value-display"
+            GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+    
+    <!-- Mutation Chance -->
+    <Label text="Mutation Chance:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+    <Slider fx:id="mutationChanceSlider" min="0" max="1" showTickMarks="true" snapToTicks="true"
+            majorTickUnit="0.25" minorTickCount="0" blockIncrement="0.05"
+            GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+    <Label fx:id="mutationChanceValue" text="0.25" styleClass="value-display"
+            GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+    
+    <!-- Prevent Duplicates -->
+    <Label text="Prevent Duplicates:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    <CheckBox fx:id="preventDuplicatesCheck" selected="true"
+            GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+    
+    <!-- Maximum Generations -->
+    <Label text="Max Generations:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+    <Slider fx:id="maxGenerationsSlider" min="1" max="100" showTickMarks="true" snapToTicks="true"
+            GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+    <Label fx:id="maxGenerationsValue" text="20" styleClass="value-display"
+            GridPane.columnIndex="2" GridPane.rowIndex="6"/>
+    
+    <!-- Target Fitness -->
+    <Label text="Target Fitness:" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+    <Slider fx:id="targetFitnessSlider" min="0" max="1" showTickMarks="true" snapToTicks="true"
+            majorTickUnit="0.25" minorTickCount="0" blockIncrement="0.05"
+            GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+    <Label fx:id="targetFitnessValue" text="1.0" styleClass="value-display"
+            GridPane.columnIndex="2" GridPane.rowIndex="7"/>
+    
+    <!-- Fitness Replay Weight -->
+    <Label text="Fitness Replay Weight:" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+    <Slider fx:id="replyFitnessWeightSlider" min="0" max="20" showTickMarks="true" snapToTicks="true"
+            GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+    <Label fx:id="replyFitnessWeightValue" text="10.0" styleClass="value-display"
+            GridPane.columnIndex="2" GridPane.rowIndex="8"/>
+            
+    <!-- Fitness Limit -->
+	<Label text="Fitness Limit:" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
+	<Slider fx:id="fitnessLimitSlider" min="0" max="1" showTickMarks="true" snapToTicks="true"
+	        majorTickUnit="0.25" minorTickCount="0" blockIncrement="0.05"
+	        GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+	<Label fx:id="fitnessLimitValue" text="0.9" styleClass="value-display"
+	        GridPane.columnIndex="2" GridPane.rowIndex="9"/>
+	        
+	<CheckBox fx:id="noFitnessLimitCheck" text="No Fitness Limit (run until other criteria met)"
+	         selected="false" GridPane.columnIndex="0" GridPane.rowIndex="10" GridPane.columnSpan="3"/>
+                
+    <!-- Maximum Time -->
+    <Label text="Maximum Time:" GridPane.columnIndex="0" GridPane.rowIndex="11"/>
+    <Slider fx:id="maxFTimeSlider" min="0.0" max="100.0" showTickMarks="true" snapToTicks="true"
+            GridPane.columnIndex="1" GridPane.rowIndex="11"/>
+    <Label fx:id="maxFTimeValue" text="10.0" styleClass="value-display"
+            GridPane.columnIndex="2" GridPane.rowIndex="11"/>
+    
+        
+    <!-- Precision Weight -->
+    <Label text="Precision Weight:" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
+    <Slider fx:id="precisionWeightSlider" min="0" max="20" showTickMarks="true" snapToTicks="true"
+            GridPane.columnIndex="1" GridPane.rowIndex="12"/>
+    <Label fx:id="precisionWeightValue" text="5.0" styleClass="value-display"
+            GridPane.columnIndex="2" GridPane.rowIndex="12"/>
+    
+    <!-- Generalization Weight -->
+    <Label text="Generalization Weight:" GridPane.columnIndex="0" GridPane.rowIndex="13"/>
+    <Slider fx:id="generalizationWeightSlider" min="0" max="20" showTickMarks="true" snapToTicks="true"
+            GridPane.columnIndex="1" GridPane.rowIndex="13"/>
+    <Label fx:id="generalizationWeightValue" text="1.0" styleClass="value-display"
+            GridPane.columnIndex="2" GridPane.rowIndex="13"/>
+    
+    <!-- Simplicity Weight -->
+    <Label text="Simplicity Weight:" GridPane.columnIndex="0" GridPane.rowIndex="14"/>
+    <Slider fx:id="simplicityWeightSlider" min="0" max="20" showTickMarks="true" snapToTicks="true"
+            GridPane.columnIndex="1" GridPane.rowIndex="14"/>
+    <Label fx:id="simplicityWeightValue" text="2.0" styleClass="value-display"
+            GridPane.columnIndex="2" GridPane.rowIndex="14"/>
+            
+    <!-- Similarity Weight -->
+    <Label text="Similarity Weight:" GridPane.columnIndex="0" GridPane.rowIndex="15"/>
+    <Slider fx:id="similarityWeightSlider" min="0" max="20" showTickMarks="true" snapToTicks="true"
+            GridPane.columnIndex="1" GridPane.rowIndex="15"/>
+    <Label fx:id="similarityWeightValue" text="0.0" styleClass="value-display"
+            GridPane.columnIndex="2" GridPane.rowIndex="15"/>
+    
+</GridPane>

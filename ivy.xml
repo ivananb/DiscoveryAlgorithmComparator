@@ -1,0 +1,68 @@
+<ivy-module version="2.0">
+    <info organisation="prom" module="Mining" revision="latest">
+        <description>Process Mining Tool with JavaFX UI</description>
+    </info>
+    <configurations>
+    	<conf name="default" extends="lib" />
+   		<conf name="lib" />
+        <conf name="default" extends="runtime"/>
+        <conf name="compile" description="Compile dependencies"/>
+        <conf name="runtime" description="Runtime dependencies"/>
+    </configurations>
+    <dependencies defaultconf="default">
+    
+        <!-- Process Mining Dependencies -->
+        <dependency org="prom" name="InductiveMiner" rev="latest" changing="true" transitive="true" conf="compile->default;runtime->default" />
+        <dependency org="prom" name="EvolutionaryTreeMiner" rev="latest" conf="compile->default;runtime->default"/>
+        <dependency org="prom" name="lpsolve" rev="latest" conf="compile->default;runtime->default"/>
+        
+        <dependency org="prom" name="BPMNMiner" rev="latest" changing="true" transitive="true" />
+        <dependency org="prom" name="BPMNConversions" rev="latest" changing="true" transitive="true" conf="compile->default;runtime->default"/> <!--convert bpmn to petri net-->
+        <dependency org="prom" name="BPMNMeasures" rev="latest" changing="true" transitive="true" />
+        
+        <!--Heuristic Miner-->
+        <dependency org="prom" name="DataAwareCNetMiner" rev="latest" changing="true" transitive="true" conf="compile->default;runtime->default" />
+        <dependency org="prom" name="HeuristicsMiner" rev="latest" changing="true" transitive="true" conf="compile->default;runtime->default" />
+        <dependency org="prom" name="HeuristicsCNetMiner" rev="latest" changing="true" transitive="true" conf="compile->default;runtime->default" />
+        
+        <!-- JavaFX Dependencies -->
+        <dependency org="org.openjfx" name="javafx-base" rev="17.0.15" conf="compile->default"/>
+		<dependency org="org.openjfx" name="javafx-controls" rev="17.0.15" conf="compile->default"/>
+		<dependency org="org.openjfx" name="javafx-fxml" rev="17.0.15" conf="compile->default"/>
+		<dependency org="org.openjfx" name="javafx-graphics" rev="17.0.15" conf="compile->default"/>
+		<dependency org="org.openjfx" name="javafx-swing" rev="17.0.15" conf="compile->default"/>
+
+        <dependency org="xerces" name="xercesImpl" rev="2.12.2" conf="compile->default;runtime->default"/>
+		
+		<!-- Log Generator -->
+		<dependency org="prom" name="ProcessLogGenerator" rev="latest" changing="true" transitive="true" conf="compile->default;runtime->default" />
+		<dependency org="prom" name="RichEventLogGenerator" rev="latest" changing="true" transitive="true" conf="compile->default;runtime->default" />
+		<dependency org="prom" name="PTAndLogGenerator" rev="latest" changing="true" transitive="true" conf="compile->default;runtime->default" />
+		
+		<dependency org="prom" name="ProcessTree" rev="latest" changing="true" transitive="true" />
+		<dependency org="prom" name="PetriNets" rev="latest" conf="compile->default;runtime->default"/>
+		<dependency org="prom" name="StochasticPetriNets" rev="latest" changing="true" transitive="true" conf="compile->default;runtime->default"/>
+		
+		<dependency org="prom" name="GraphVisualizers" rev="latest" conf="compile->default;runtime->default"/>
+		<dependency org="prom" name="ProM-Framework" rev="latest" conf="compile->default;runtime->default"/>
+		<dependency org="prom" name="DottedChart" rev="latest" conf="compile->default;runtime->default"/>
+		<dependency org="prom" name="DottedChart2" rev="latest" conf="compile->default;runtime->default"/>
+		<dependency org="prom" name="Statechart" rev="latest" conf="compile->default;runtime->default"/>
+		
+		<dependency org="prom" name="ChangeVisualization" rev="latest" conf="compile->default;runtime->default"/>
+		<dependency org="prom" name="DeclareMinerVisualizer" rev="latest" conf="compile->default;runtime->default"/>
+		<dependency org="prom" name="DeclareVisualizer" rev="latest" conf="compile->default;runtime->default"/>
+		<dependency org="prom" name="PTRFramework" rev="latest" conf="compile->default;runtime->default"/>
+		<dependency org="prom" name="ComparisonFramework" rev="latest" conf="compile->default;runtime->default"/>
+		<dependency org="prom" name="ComplianceFramework" rev="latest" conf="compile->default;runtime->default"/>
+        
+        <dependency org="prom" name="Murata" rev="latest" changing="true" transitive="true" conf="compile->default;runtime->default"/>
+        <dependency org="prom" name="PNetReplayer" rev="latest" changing="true" transitive="true" />
+        
+		<dependency org="prom" name="ProM-Framework" rev="latest" changing="true" transitive="true" conf="compile->default;runtime->default"/>
+		<dependency org="prom" name="ProM-Plugins" rev="latest" changing="true" transitive="true"/>
+        <dependency org="prom" name="ProM-Contexts" rev="latest" changing="true" transitive="true"/>
+        <dependency org="prom" name="ProM-Models" rev="latest" changing="true" transitive="true"/>
+		
+       </dependencies>
+</ivy-module>

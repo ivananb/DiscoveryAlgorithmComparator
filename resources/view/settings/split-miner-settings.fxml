@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+          fx:controller="main.controller.settings.SplitMinerSettingsController"
+          stylesheets="@/css/parameters-settings.css" hgap="10" vgap="10">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+	
+	<!-- Core Threshold Parameters -->
+    <Label text="Frequency Threshold:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+    <Slider fx:id="frequencyThresholdSlider" min="0.0" max="1.0" blockIncrement="0.05" 
+           majorTickUnit="0.1" minorTickCount="1" showTickMarks="true" snapToTicks="true" 
+           GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+    <Label fx:id="frequencyThresholdValue" text="0.80" styleClass="value-display" 
+           GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+
+    <Label text="Parallelism Threshold:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <Slider fx:id="parallelismThresholdSlider" min="0.0" max="1.0" blockIncrement="0.05" 
+           majorTickUnit="0.1" minorTickCount="1" showTickMarks="true" snapToTicks="true" 
+           GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <Label fx:id="parallelismThresholdValue" text="0.40" styleClass="value-display" 
+           GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+    <!-- Filter Type Selection -->
+    <Label text="Filter Type:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <ComboBox fx:id="filterTypeCombo" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="2"/>
+
+    <!-- Gateway Options -->
+    <Label text="Gateway Options:" GridPane.columnIndex="0" GridPane.rowIndex="3" 
+           styleClass="section-header" GridPane.columnSpan="3"/>
+    
+    <CheckBox fx:id="replaceORsCheck" text="Replace OR Gateways" 
+             GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="3"/>
+    
+    <CheckBox fx:id="useInclusiveSemanticsCheck" text="Use Inclusive Semantics" 
+             GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="3"/>
+
+    <!-- Loop Handling Options -->
+    <Label text="Loop Handling:" GridPane.columnIndex="0" GridPane.rowIndex="6" 
+           styleClass="section-header" GridPane.columnSpan="3"/>
+    
+    <CheckBox fx:id="removeLoopActivitiesCheck" text="Remove Loop Activities" 
+             GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.columnSpan="3"/>
+</GridPane>
