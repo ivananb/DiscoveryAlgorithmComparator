@@ -6,6 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * * Main application class for the MiningApp.
+*/
 public class MiningApp extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {

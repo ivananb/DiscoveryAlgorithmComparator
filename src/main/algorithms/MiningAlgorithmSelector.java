@@ -9,6 +9,9 @@ import org.processmining.plugins.heuristicsnet.miner.heuristics.miner.settings.H
 
 import main.controller.settings.ETMParameterStorage;
 
+/**
+ * Factory class to select and manage instances of different mining algorithms.
+ */
 public class MiningAlgorithmSelector {
 	private static Map<String, MiningAlgorithm> algorithmInstances = new HashMap<>();
 
@@ -46,6 +49,7 @@ public class MiningAlgorithmSelector {
 		algorithmInstances.put(algorithmName, algorithm);
 		printCurrentParameters(algorithm);
 		return algorithm;
+		
 	}
 
 	private static void printCurrentParameters(MiningAlgorithm algorithm) {

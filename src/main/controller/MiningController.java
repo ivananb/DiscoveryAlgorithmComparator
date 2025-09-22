@@ -26,6 +26,10 @@ import org.processmining.contexts.uitopia.UIContext;
 import org.processmining.contexts.uitopia.UIPluginContext;
 import org.processmining.models.semantics.petrinet.Marking;
 
+/**
+ * Controller for the main mining application UI.
+ * Handles loading models, generating logs, mining, and displaying results.
+ */
 public class MiningController {
 	// UI Components
 	@FXML private ComboBox<String> miningAlgorithmComboBox;
@@ -633,6 +637,11 @@ public class MiningController {
 		return generatedLog;
 	}
 	
+	public UIPluginContext getPluginContext() {
+	    return this.pluginContext;
+	}
+	
+
 	@FXML
 	private void handleRemoveSilentTransitions() {
 	    if (discoveredModel == null) {

@@ -9,6 +9,10 @@ import org.processmining.models.semantics.petrinet.Marking;
 import org.processmining.plugins.petrinet.reduction.MurataOutput;
 import org.processmining.plugins.petrinet.reduction.MurataParameters;
 
+/**
+ * Utility class to perform Murata reduction on Petri nets.
+ * It removes silent transitions while preserving the behaviour of the net.
+ */
 public class MurataReduction {
     private final UIPluginContext pluginContext;
     private Petrinet originalModel;
@@ -90,7 +94,7 @@ public class MurataReduction {
                              origStats.get("edges").equals(discStats.get("edges"));
         
         stats.append("\nComparison Result: ").append(
-                equivalent1 ? "✔ Models are structurally equivalent\n" : "❌ Models have structural differences\n");
+                equivalent1 ? "✔ Models are structurally equivalent\n" : "[X] Models have structural differences\n");
         
         // Discovered vs Reduced (Murata reduction results)
         stats.append("\n" + "=".repeat(50) + "\n");
@@ -138,7 +142,7 @@ public class MurataReduction {
         
         stats.append("\nFinal Result: ").append(
                 equivalentFinal ? "✔ Reduced model matches original structure!\n" : 
-                                 "❌ Structural differences remain after reduction\n");
+                                 "[X] Structural differences remain after reduction\n");
         
         return stats.toString();
     }

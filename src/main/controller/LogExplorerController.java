@@ -9,6 +9,10 @@ import org.deckfour.xes.model.XLog;
 import org.deckfour.xes.model.XTrace;
 import java.io.File;
 
+/**
+ * Controller class for the Log Explorer UI.
+ * Manages the display and interaction with event logs.
+ */
 public class LogExplorerController {
 	@FXML
 	private ListView<String> traceListView;

@@ -13,6 +13,8 @@ import main.algorithms.MiningAlgorithm;
 import main.algorithms.MiningAlgorithmSelector;
 import main.utils.MurataReduction;
 import main.utils.Utils;
+import nl.tue.astar.AStarException;
+
 import org.deckfour.xes.model.XLog;
 import org.processmining.contexts.uitopia.UIContext;
 import org.processmining.contexts.uitopia.UIPluginContext;
@@ -43,7 +45,6 @@ import com.raffaeleconforti.wrapper.PetrinetWithMarking;
 import com.raffaeleconforti.marking.MarkingDiscoverer;
 //import au.edu.qut.bpmn.metrics.ComplexityCalculator;
 //import au.edu.qut.petrinet.tools.SoundnessChecker;
-import nl.tue.astar.AStarException;
 import org.processmining.framework.plugin.PluginContext;
 import org.processmining.plugins.multietc.plugins.MultiETCPlugin;
 import org.processmining.plugins.multietc.res.MultiETCResult;
@@ -51,6 +52,10 @@ import org.processmining.plugins.multietc.sett.MultiETCSettings;
 import org.processmining.models.graphbased.directed.petrinet.elements.Transition;
 
 
+/**
+ * Controller class for the Statistics UI.
+ * Manages the display and interaction with algorithm performance statistics.
+ */
 public class StatisticsController {
 
     @FXML private TableView<AlgorithmResult> resultsTableView;
@@ -190,6 +195,8 @@ public class StatisticsController {
         this.generatedLog = generatedLog;
         this.miningController = miningController;
         
+        
+        
         updateFileInfo();
     }
 
@@ -316,7 +323,13 @@ public class StatisticsController {
             if (discoveredModel != null) {
                 // Set individual counts
                 result.setPlacesCount(discoveredModel.getPlaces().size());
-                result.setTransitionsCount(discoveredModel.getTransitions().size());
+                //result.setTransitionsCount(discoveredModel.getTransitions().size());
+                // Exclude invisible transitions from count
+                int visibleTransitions = 0;
+                for (Transition t : discoveredModel.getTransitions()) {
+					if (!t.isInvisible()) visibleTransitions++;
+				}
+                result.setTransitionsCount(visibleTransitions);
                 result.setArcsCount(discoveredModel.getEdges().size());
                 
                 // Calculate all metrics
@@ -740,7 +753,7 @@ public class StatisticsController {
             System.setOut(originalOut);
             
             return replayer.replayLog(pluginContext, petrinet, log, mapping, parameters);
-        } catch (AStarException | ArrayIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException | AStarException e) {
             e.printStackTrace();
         } finally {
             // Always restore output

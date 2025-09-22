@@ -122,16 +122,32 @@ The Murata reduction provides comprehensive statistics including:
 
 ---
 
-## **Installation** !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+## **Installation**
 
 ### 1. Clone the repository
 
 ```bash
 git clone https://github.com/ivananb/DiscoveryAlgorithmComparator.git
+cd DiscoveryAlgorithmComparator
 ```
+### 2. Build the application (For running Jar)
+If you want to build the JAR yourself from the source code, ensure you have Apache Ant and Ivy installed, then run:
+```bash
+    ant main
+```
+or
+```bash
+    ant uber-jar
+```
+This will create the executable JAR file in the /target directory.
 
-### 2. Run the application:
+### 3. Run the application:
+You can run the application in two ways:
 - From your IDE: Run the MiningApp.java class as a Java Application
+- Using the pre-built JAR file (Command Line): Navigate to the project directory and run the following command
+```bash
+    java -jar target/DiscoveryAlgorithmComparator.jar
+```
 
 ---
 

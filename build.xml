@@ -11,6 +11,7 @@
     <property name="lib.dir" value="lib" />
     <property name="main-class" value="main.MainTest" />
     <property name="resources.dir" value="resources" />
+    <property name="final-jar-name" value="DiscoveryAlgorithmComparator.jar" />
 
     <target name="resolve" description="retrieve dependencies with ivy">
         <ivy:retrieve />
@@ -43,25 +44,61 @@
         <javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}" classpathref="classpath" />
     </target>
 
+    <!-- Target to copy dependencies as individual JARs (for other packaging methods) -->
     <target name="copy-dependencies">
         <mkdir dir="${dist.lib.dir}" />
-        <jar jarfile="${dist.lib.dir}/dependencies-all.jar" zip64Mode="always">
-            <zipgroupfileset dir="${lib.dir}">
-                <include name="**/*.jar" />
-            </zipgroupfileset>
-        </jar>
+        <!-- Copy all jars from ivy's cache to our target/lib directory -->
+        <ivy:retrieve pattern="${dist.lib.dir}/[artifact]-[type]-[revision].[ext]" conf="runtime" />
     </target>
 
-    <target name="jar" depends="compile, copy-dependencies" description="package, output to JAR">
+    <!-- Target to build a proper STANDALONE UBER-JAR -->
+    <target name="uber-jar" depends="compile, copy-dependencies" description="package, output to a single runnable JAR">
         <mkdir dir="${dist.dir}" />
-        <mkdir dir="${dist.lib.dir}" />
-        <jar jarfile="${dist.dir}/${projectName}.jar" basedir="${build.dir}" zip64Mode="always">
-        	<manifest>
-        		<attribute name="Main-Class" value="${main-class}" />
-        	</manifest>
-            <zipfileset src="${dist.lib.dir}/dependencies-all.jar" excludes="META-INF/*.SF" />
-        	<fileset dir="${resources.dir}" />
+        
+        <!-- Step 1: Create a temporary directory to build the JAR contents -->
+        <property name="temp.dir" value="${build.dir}/temp-jar"/>
+        <delete dir="${temp.dir}"/>
+        <mkdir dir="${temp.dir}"/>
+        
+        <!-- Step 2: Copy all of OUR compiled classes -->
+        <copy todir="${temp.dir}">
+            <fileset dir="${build.dir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </copy>
+        
+        <!-- Step 3: Copy all of OUR resources (FXML, CSS, etc.) -->
+        <copy todir="${temp.dir}">
+            <fileset dir="${src.dir}/main/resources"/> 
+        </copy>
+        
+        <!-- Step 4: UNPACK all dependency JARs into the temp directory -->
+        <!-- This is the key step for creating a true Uber-JAR -->
+        <unzip dest="${temp.dir}">
+            <fileset dir="${dist.lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <patternset>
+                <!-- Exclude signature files to avoid potential security errors -->
+                <exclude name="META-INF/*.SF"/>
+                <exclude name="META-INF/*.DSA"/>
+                <exclude name="META-INF/*.RSA"/>
+            </patternset>
+        </unzip>
+        
+        <!-- Step 5: Create the final JAR file from the temp directory -->
+        <jar destfile="${dist.dir}/${final-jar-name}" basedir="${temp.dir}" zip64Mode="always">
+            <manifest>
+                <attribute name="Main-Class" value="main.MiningApp"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Implementation-Vendor" value="Ivana"/>
+                <attribute name="Implementation-Title" value="Discovery Algorithm Comparator"/>
+            </manifest>
         </jar>
+        
+        <!-- Clean up the temp directory -->
+        <delete dir="${temp.dir}"/>
+        <echo message="Uber-JAR built successfully: ${dist.dir}/${final-jar-name}"/>
     </target>
 
     <target name="clean" description="clean up">
@@ -69,20 +106,13 @@
         <delete dir="${dist.dir}" />
     </target>
 
-    <target name="main" depends="clean, resolve, compile, jar" />
+    <target name="main" depends="clean, resolve, compile, uber-jar" />
 	
 	<target name="ivy-report" depends="resolve" description="Generate dependency report">
 	    <mkdir dir="${build.dir}/reports"/>
 	    <ivy:report todir="${build.dir}/reports" conf="default"/>
 	    <echo message="Report generated at ${build.dir}/reports/ivy-report.html"/>
 	</target>
-	
-	<target name="compile1" depends="init" description="compile the source ">
-	    <javac includeantruntime="false" srcdir="${src.dir}" 
-	                   destdir="${build.dir}" classpathref="classpath">
-	        <!-- Include the measurements package -->
-	        <include name="com/raffaeleconforti/measurements/**/*.java"/>
-	    </javac>
-	</target>
+
 
 </project>

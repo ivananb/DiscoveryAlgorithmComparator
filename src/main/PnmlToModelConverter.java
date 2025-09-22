@@ -27,6 +27,9 @@ import org.processmining.models.semantics.petrinet.Marking;
 import org.processmining.plugins.stochasticpetrinet.StochasticNetUtils;
 import main.utils.Utils;
 
+/**
+ * Utility class for converting PNML files to Petri net models and generating event logs.
+ */
 public class PnmlToModelConverter {
 
 	public Petrinet loadPetriNetFromPnml(File pnmlFile) throws Exception {
@@ -103,7 +106,18 @@ public class PnmlToModelConverter {
 																												// plugin
 																												// simulation
 	}
-
+	
+	/**
+	 * Simulates the given Petri net model using the Stochastic Petri Net plugin to generate an event log.
+	 *
+	 * @param context         The UI plugin context.
+	 * @param model           The Petri net model to simulate.
+	 * @param initialMarking  The initial marking for the simulation.
+	 * @param numberOfTraces  The number of traces to generate.
+	 * @param maxTraceLength  The maximum length of each trace.
+	 * @return The generated event log as an XLog object.
+	 * @throws Exception If the simulation fails.
+	 */
 	private XLog simulateWithStochasticPlugin(UIPluginContext context, Petrinet model, Marking initialMarking,
 			int numberOfTraces, int maxTraceLength) throws Exception {
 		try {
@@ -250,7 +264,7 @@ public class PnmlToModelConverter {
 	                        refStats.get("edges").equals(discStats.get("edges"));
 	    
 	    sb.append("\nComparison Result: ").append(
-	            equivalent ? "✔ Models are structurally equivalent\n" : "❌ Models have structural differences\n");
+	            equivalent ? "✔ Models are structurally equivalent\n" : "[X] Models have structural differences\n");
 	    
 	    return sb.toString();
 	}

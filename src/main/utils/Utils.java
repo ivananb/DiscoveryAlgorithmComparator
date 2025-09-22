@@ -138,25 +138,24 @@ public class Utils {
     public static String formatStatistics(Petrinet net, String title) {
         Map<String, Integer> stats = getNetStatistics(net);
         
-        return String.format("""
-            %s:
-            ===================
-            Places:           %d
-            Transitions:      %d
-            - Visible:        %d
-            - Silent:         %d
-            Edges:            %d
-            Visible Edges:    %d
-            Visible Places:   %d
-            """, 
-            title,
-            stats.get("places"),
-            stats.get("transitions"),
-            stats.get("visibleTransitions"),
-            stats.get("silentTransitions"),
-            stats.get("edges"),
-            stats.get("visibleEdges"),
-            stats.get("visiblePlaces")
+        return String.format(
+                "%s:\n" +
+                "===============\n" +
+                "Places:           %d\n" +
+                "Transitions:      %d\n" +
+                "- Visible:        %d\n" +
+                "- Silent:         %d\n" +
+                "Edges:            %d\n" +
+                "Visible Edges:    %d\n" +
+                "Visible Places:   %d\n",
+                title,
+                stats.get("places"),
+                stats.get("transitions"),
+                stats.get("visibleTransitions"),
+                stats.get("silentTransitions"),
+                stats.get("edges"),
+                stats.get("visibleEdges"),
+                stats.get("visiblePlaces")
         );
     }
     

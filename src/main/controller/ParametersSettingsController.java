@@ -19,6 +19,10 @@ import org.processmining.plugins.heuristicsnet.miner.heuristics.miner.settings.H
 
 import main.utils.Utils;
 
+/**
+ * Controller class for managing the parameters settings UI.
+ * Dynamically loads and displays settings for different mining algorithms.
+ */
 public class ParametersSettingsController {
 
 	@FXML private VBox settingsContainer;
@@ -158,7 +162,6 @@ public class ParametersSettingsController {
 		}
 	}
 
-	
 
 	private void configureDialogButtons() {
 		// Get references to the buttons
