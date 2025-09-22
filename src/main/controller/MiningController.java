@@ -143,7 +143,7 @@ public class MiningController {
 
 		try {
 			// Get user input for number of traces and max trace length
-			int numberOfTraces = Utils.parseIntWithDefault(traceCountField.getText(), 100);
+			int numberOfTraces = Utils.parseIntWithDefault(traceCountField.getText(), 1000);
 			int maxTraceLength = Utils.parseIntWithDefault(maxTraceLengthField.getText(), 50);
 
 			// Generate log with parameters using the stored PNML file
@@ -165,7 +165,7 @@ public class MiningController {
 	@FXML
 	private void handleClearResults() {
 		// Reset all values to defaults
-		traceCountField.setText("100");
+		traceCountField.setText("1000");
 		maxTraceLengthField.setText("50");
 		miningAlgorithmComboBox.getSelectionModel().selectFirst();
 		removeSilentTransitionsCheckbox.setSelected(false);
@@ -223,7 +223,7 @@ public class MiningController {
 		updateButtonStates();
 
 		// Reset trace parameters to defaults
-		traceCountField.setText("100");
+		traceCountField.setText("1000");
 		maxTraceLengthField.setText("50");
 
 		// Restore the preserved text

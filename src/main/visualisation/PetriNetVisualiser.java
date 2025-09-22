@@ -102,7 +102,6 @@ public class PetriNetVisualiser {
 			// Print final DOT string
 			String dotString = sb.toString().replace("'", "\\'");
 			System.out.println("[DEBUG] Final DOT string: " + dotString);
-			System.out.println("remember to add\n" + "digraph \"\" ");
 			return dotString;
 
 		} catch (Exception e) {

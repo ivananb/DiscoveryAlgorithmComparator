@@ -42,7 +42,7 @@
        <HBox fx:id="pnmlWorkflowBox" alignment="CENTER_LEFT" spacing="10" styleClass="button-section" visible="false">
           <children>
               <Label text="Traces:" />
-              <TextField fx:id="traceCountField" promptText="100" />
+              <TextField fx:id="traceCountField" promptText="1000" />
               <Label text="Max Length:" />
               <TextField fx:id="maxTraceLengthField" promptText="50" />
               <Button fx:id="generateLogButton" onAction="#handleGenerateLog" text="Generate Event Log" />
