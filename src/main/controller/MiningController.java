@@ -21,6 +21,9 @@ import main.utils.MurataReduction;
 import main.utils.VisualisationController;
 import org.deckfour.xes.model.XLog;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+
 import main.utils.Utils;
 import org.processmining.contexts.uitopia.UIContext;
 import org.processmining.contexts.uitopia.UIPluginContext;
@@ -529,6 +532,9 @@ public class MiningController {
 		// Load the log
 		importedXesLog = converter.importXesLog(xesFile);
 		currentPnmlFile = xesFile;
+		
+		// Display log information in text area
+	    displayImportedXesLogInformation(xesFile);
 
 		// Update UI state
 		currentFileType = FileType.XES;
@@ -747,6 +753,38 @@ public class MiningController {
 	    }
 	    
 	    StatisticsController.showStatisticsWindow(currentPnmlFile, originalModel, generatedLog, this);
+	}
+	
+	private void displayImportedXesLogInformation(File xesFile) {
+	    if (importedXesLog == null) {
+	        return;
+	    }
+	    
+	    String logName = xesFile.getName();
+	    int traceCount = importedXesLog.size();
+	    int eventCount = importedXesLog.stream().mapToInt(trace -> trace.size()).sum();
+	    
+	    // Calculate unique activities
+	    Set<String> uniqueActivities = new HashSet<>();
+	    for (org.deckfour.xes.model.XTrace trace : importedXesLog) {
+	        for (org.deckfour.xes.model.XEvent event : trace) {
+	            String activityName = converter.getEventName(event);
+	            if (activityName != null) {
+	                uniqueActivities.add(activityName);
+	            }
+	        }
+	    }
+	    
+	    updateApplicationStatus(String.format("Loaded %s (%d traces, %d events, %d unique activities)", 
+	            logName, traceCount, eventCount, uniqueActivities.size()));
+
+	    miningResultsTextArea.appendText(String.format("Successfully imported XES log:\n" + 
+	            "- File: %s\n" + 
+	            "- Traces: %d\n" + 
+	            "- Total events: %d\n" + 
+	            "- Unique activities: %d\n\n", 
+	            logName, traceCount, eventCount, uniqueActivities.size()));
+	    clearResultsButton.setDisable(false);
 	}
 	
 }

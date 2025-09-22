@@ -278,4 +278,13 @@ public class PnmlToModelConverter {
 		}
 
 	}
+	
+	public String getEventName(org.deckfour.xes.model.XEvent event) {
+	    try {
+	        org.deckfour.xes.model.XAttribute attribute = event.getAttributes().get("concept:name");
+	        return attribute != null ? attribute.toString() : null;
+	    } catch (Exception e) {
+	        return null;
+	    }
+	}
 }
